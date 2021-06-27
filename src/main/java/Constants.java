@@ -7,4 +7,5 @@ public class Constants {
     public static final String SNAKE_CASE = "SNAKE_CASE";
     public static final String SENTENCE_CASE = "SENTENCE_CASE";
     public static final String PASCAL_CASE = "PASCAL_CASE";
+    public static final String DOT_CASE = "DOT_CASE";
 }
