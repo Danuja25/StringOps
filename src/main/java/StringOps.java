@@ -2,6 +2,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class StringOps {
@@ -61,4 +62,8 @@ public class StringOps {
         return Pattern.matches(pattern,str);
     }
 
+    public static boolean validatePassword(String password, List<Rule> rules)
+    {
+        return Rules.validate(password, rules);
+    }
 }
