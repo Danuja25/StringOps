@@ -8,4 +8,8 @@ public class Constants {
     public static final String SENTENCE_CASE = "SENTENCE_CASE";
     public static final String PASCAL_CASE = "PASCAL_CASE";
     public static final String DOT_CASE = "DOT_CASE";
+
+    public static final String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    public static final String URL_PATTERN = "[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?";
+    public static final String PHONE_PATTERN = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$";
 }

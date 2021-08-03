@@ -1,6 +1,8 @@
 import org.apache.commons.lang.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class StringOps {
 
@@ -21,18 +23,42 @@ public class StringOps {
             case Constants.LOWER_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)));
             case Constants.KEBAB_CASE:
-                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s) + "-"));
+                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("-"));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("-"));
             case Constants.SNAKE_CASE:
-                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s) + "_"));
+                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("_"));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("_"));
             case Constants.DOT_CASE:
-                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s) + "."));
+                Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("."));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("."));
             default:
-                caseWord.append(words);
+                caseWord.append(Arrays.toString(words));
 
         }
         return caseWord.toString();
     }
+
+    public static void printObject(Object o)
+    {
+        Class<?> aClass = o.getClass();
+        Field[] fields = aClass.getFields();
+        StringBuilder objectValues= new StringBuilder();
+
+        Arrays.stream(fields).forEach(field -> {
+            field.setAccessible(true);
+            try {
+                objectValues.append(field.getName() + " = " + field.get(o));
+            } catch (final IllegalAccessException e) {
+                objectValues.append(field.getName() + " = " + "Inaccessible");
+            }
+        });
+
+        System.out.println(objectValues.toString());
+    }
+
+    public static boolean checkPattern(String str, String pattern)
+    {
+        return Pattern.matches(pattern,str);
+    }
+
 }
