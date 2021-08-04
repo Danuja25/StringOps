@@ -11,27 +11,33 @@ public class StringOps {
     {
         String[] words = str.split("[\\W]|_");
         StringBuilder caseWord = new StringBuilder();
-        Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.capitalize(s)));
         switch (newCase)
         {
             case Constants.CAMEL_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.capitalize(s)));
                 caseWord.setCharAt(0,words[0].toLowerCase().charAt(0));
+                break;
             case Constants.PASCAL_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.capitalize(s)));
+                break;
             case Constants.UPPER_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.upperCase(s)));
+                break;
             case Constants.LOWER_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)));
+                break;
             case Constants.KEBAB_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("-"));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("-"));
+                break;
             case Constants.SNAKE_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("_"));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("_"));
+                break;
             case Constants.DOT_CASE:
                 Arrays.stream(words).forEach(s -> caseWord.append(StringUtils.lowerCase(s)).append("."));
                 caseWord.deleteCharAt(caseWord.lastIndexOf("."));
+                break;
             default:
                 caseWord.append(Arrays.toString(words));
 
@@ -42,19 +48,27 @@ public class StringOps {
     public static void printObject(Object o)
     {
         Class<?> aClass = o.getClass();
-        Field[] fields = aClass.getFields();
-        StringBuilder objectValues= new StringBuilder();
+        if(aClass.isRecord())
+        {
+            System.out.println(o);
+        }
+        else
+        {
+            Field[] fields = aClass.getFields();
+            StringBuilder objectValues= new StringBuilder();
 
-        Arrays.stream(fields).forEach(field -> {
-            field.setAccessible(true);
-            try {
-                objectValues.append(field.getName() + " = " + field.get(o));
-            } catch (final IllegalAccessException e) {
-                objectValues.append(field.getName() + " = " + "Inaccessible");
-            }
-        });
+            Arrays.stream(fields).forEach(field -> {
+                field.setAccessible(true);
+                try {
+                    objectValues.append(field.getName() + " = " + field.get(o));
+                } catch (final IllegalAccessException e) {
+                    objectValues.append(field.getName() + " = " + "Inaccessible");
+                }
+            });
 
-        System.out.println(objectValues.toString());
+            System.out.println(objectValues);
+        }
+
     }
 
     public static boolean checkPattern(String str, String pattern)
