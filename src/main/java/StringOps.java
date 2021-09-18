@@ -1,9 +1,11 @@
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class StringOps {
 
@@ -80,4 +82,32 @@ public class StringOps {
     {
         return Rules.validate(password, rules);
     }
+
+    public static List<String> getSubStrings(String str)
+    {
+        return getSubStringsUptoLength(str, str.length());
+    }
+
+    private static List<String> getSubStringsUptoLength(String str, int length)
+    {
+        List<String> subStrings = new ArrayList<>();
+        int n = str.length();
+        IntStream.range(0, n).parallel().forEach(value -> {
+            IntStream.range(value+1, length).parallel().forEach(j -> {
+                subStrings.add(str.substring(value, j));
+            });
+        });
+        return subStrings;
+    }
+
+    private static List<String> getSubStringsOfLength(String str, int length)
+    {
+        List<String> subStrings = new ArrayList<>();
+        int n = str.length();
+        IntStream.range(0, n).parallel().forEach(value -> {
+            subStrings.add(str.substring(value, value+(length+1)));
+        });
+        return subStrings;
+    }
+
 }
