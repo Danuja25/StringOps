@@ -92,11 +92,7 @@ public class StringOps {
     {
         List<String> subStrings = new ArrayList<>();
         int n = str.length();
-        IntStream.range(0, n).parallel().forEach(value -> {
-            IntStream.range(value+1, length).parallel().forEach(j -> {
-                subStrings.add(str.substring(value, j));
-            });
-        });
+        IntStream.range(0, n).parallel().forEach(value -> IntStream.range(value+1, length).parallel().forEach(j -> subStrings.add(str.substring(value, j))));
         return subStrings;
     }
 
@@ -104,9 +100,7 @@ public class StringOps {
     {
         List<String> subStrings = new ArrayList<>();
         int n = str.length();
-        IntStream.range(0, n).parallel().forEach(value -> {
-            subStrings.add(str.substring(value, value+(length+1)));
-        });
+        IntStream.range(0, n).parallel().forEach(value -> subStrings.add(str.substring(value, value+(length+1))));
         return subStrings;
     }
 
